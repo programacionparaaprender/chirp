@@ -1,3 +1,10 @@
+var socket = io.connect('http://localhost:3000');
+
+
+
+
+
+
 var app = angular.module('chirpApp', ['ngRoute', 'ngResource']).run(function($rootScope) {
 	$rootScope.authenticated = false;
 	$rootScope.current_user = '';
@@ -9,6 +16,43 @@ var app = angular.module('chirpApp', ['ngRoute', 'ngResource']).run(function($ro
 	};
 });
 
+
+app.value('version', '0.1')
+app.factory('socket', function($rootScope) {
+    var socket = io.connect(); 
+    return {
+        on: function(eventName, callback) {
+            socket.on(eventName, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        emit: function(eventName, data, callback) {
+            socket.emit(eventName, data, function() {
+                var args = arguments;
+                $rootScope.$apply(function() {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
+        }
+    };
+});
+
+
+
+
+
+
+
+
+
+app.config(['$locationProvider', function($locationProvider) {
+	$locationProvider.html5Mode(true);
+}]);
 app.config(function($routeProvider){
 	$routeProvider
 		//the timeline display
@@ -25,7 +69,12 @@ app.config(function($routeProvider){
 		.when('/register', {
 			templateUrl: 'register.html',
 			controller: 'authController'
+		})
+		.when('/chat', {
+			templateUrl: 'chat.html',
+			controller: 'chatController'
 		});
+		//$routeProvider.html5Mode(true);
 });
 
 app.factory('postService', function($resource){
@@ -46,8 +95,25 @@ app.controller('mainController', function(postService, $scope, $rootScope){
 	};
 });
 
-app.controller('registrarController', function ($scope) {
-	$scope.message = 'Esta es la página de "Contacto", aquí podemos poner un formulario';
+app.controller('chatController', function ($scope) {
+	$scope.usuario = {nombre: '', mensaje: '', output:''};
+	//var   mesaj = document.getElementById('mesaj'),
+      //baslik = document.getElementById('baslik'),
+      //btn = document.getElementById('gonder'),
+      //output = document.getElementById('output'),
+      //feedback = document.getElementById('feedback');
+	  socket.on('chat', function(data){
+			//feedback.innerHTML = '';
+			$scope.usuario.output += '<p><strong>' + data.baslik + ': </strong>' + data.mesaj + '</p>';
+	  });
+	$scope.enviar = function() {
+		console.log("envío")
+		socket.emit('chat', {
+			mesaj: $scope.usuario.mensaje,
+			baslik: $scope.usuario.nombre
+		});
+		mesaj.value = "";
+	}
 });
 
 app.controller('authController', function($scope, $http, $rootScope, $location){
