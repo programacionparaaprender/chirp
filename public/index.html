@@ -3,7 +3,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+	
 		<!-- Required meta tags always come first -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,6 +12,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script> 
+		
 		<script src="javascripts/chirpApp.js"></script>
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="css/bootstrap.css">
@@ -24,16 +26,17 @@
 		<script src="js/jquery.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="stylesheets/style.css">
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 	</head>
 	<body ng-app="chirpApp">
 		<div id='main' class="container">
 			<nav class="navbar-fluid navbar-default navbar-fixed-top">
 				<div class="container">
-					<p class="navbar-right navbar-text" ng-hide="authenticated"><a href="/chat">Chat</a></p>
+					<a href="#/mensajes" ng-show="authenticated">Chat</a>
 					<a class="navbar-brand" href="#"> Chirp! </a>
 					<p class="navbar-text"> Learn the MEAN stack by building this tiny app</p>
-					<p class="navbar-right navbar-text" ng-hide="authenticated"><a href="/login">Login</a> or 
-						<a href="/register">Register</a></p>
+					<p class="navbar-right navbar-text" ng-hide="authenticated"><a href="#/login">Login</a> or 
+						<a href="#/register">Register</a></p>
 					<p class="navbar-right navbar-text" ng-show="authenticated"><a href="#" ng-click="signout()">Logout</a></p>
 					<p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
 				</div>

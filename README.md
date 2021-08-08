@@ -21,10 +21,18 @@ and deploy it all on Azure!
 ejemplo@ejemplo.com
 123456
 
+prueba@ejemplo.com
+123456
 
 https://stackoverflow.com/questions/25003695/integrate-socket-io-into-angularjs-project
 https://johan.driessen.se/posts/Manipulating-history-with-the-HTML5-History-API-and-AngularJS/
 
 http://localhost:3000/
+
+
+---------------------
+Sockets en angular
+-----------------------
+https://code.tutsplus.com/es/tutorials/more-responsive-single-page-applications-with-angularjs-socketio-creating-the-library--cms-21738
 
 
